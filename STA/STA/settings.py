@@ -113,6 +113,7 @@ WSGI_APPLICATION = 'STA.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
+    # MySQL 8
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'scg_tgl_assistant',
@@ -121,9 +122,11 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': '1',
     },
+    # MySQL 5.7.43
     'tgl': {
-        # 'ENGINE': 'mysql.connector.django',
-        'ENGINE': 'django.db.backends.mysql',
+        # 注意，需要安装 pip install mysql-connector-python
+        'ENGINE': 'mysql.connector.django',
+        # 'ENGINE': 'django.db.backends.mysql',
         'NAME': 'ntgldata',
         'HOST': '127.0.0.1',
         'PORT': 3307,

@@ -8,13 +8,38 @@ password: 123456
 
 ```
 GET,POST: 
-http://127.0.0.1:8000/material_category/category/
+http://127.0.0.1:8000/api/material_category/category/
 
 GET,PUT,PATCH,DELETE:
-http://127.0.0.1:8000/material_category/category/<int:pk>
+http://127.0.0.1:8000/api/material_category/category/<int:pk>
 ```
 
-## 原料与分类绑定
+## OriginalMaterial 原料
 
+```
+GET:
+http://127.0.0.1:8000/api/material_category/material/
 
+GET:
+http://127.0.0.1:8000/api/material_category/material/<int:pk>
+```
 
+## MaterialLinkCategory 原料与分类绑定
+
+```
+GET,POST: 
+http://127.0.0.1:8000/api/material_category/material_link_category/
+
+GET,PUT,PATCH,DELETE:
+http://127.0.0.1:8000/api/material_category/material_link_category/<int:pk>
+```
+
+## 
+
+```
+GET:
+http://127.0.0.1:8000/api/order/order/
+
+GET:
+http://127.0.0.1:8000/api/order/order/<int:pk>
+```

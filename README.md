@@ -13,7 +13,7 @@ We mainly obtain data for the TGL software from the following table:
 | FHtbh      | contractId                         |      |
 | FRwxz      |                                    |      |
 | FRwly      | from which software                |      |
-| FZt        | status                             |      |
+| FZt        | status                             | Y    |
 | FHtdw      | company name                       | Y    |
 | FGcmc      | project name                       | Y    |
 | FGcjb      |                                    |      |
@@ -222,8 +222,8 @@ erDiagram
 erDiagram
     "original material(tycl)" {
         int(11) FYclid UK "materialId"
-        varchar(24) FYlmc PK "原料"
-        varchar(24) FPzgg PK "品种"
+        varchar(24) FYlmc PK,UK "原料"
+        varchar(24) FPzgg PK,UK "品种"
     }
     "brief recipe(tphb)" {
         int(11) FPhbh PK "recipeId"
@@ -249,10 +249,11 @@ erDiagram
 
 ### material category table (called: material_category)
 
-| columnName   | description |
-| ------------ | ----------- |
-| categoryId   | PK          |
-| categoryName | 分类名      |
+| columnName         | description  |
+| ------------------ | ------------ |
+| categoryId         | PK           |
+| categoryName       | UK,分类名    |
+| intoStatisticsFlag | 是否纳入统计 |
 
 
 ### material link category table (called: material_link_category)
@@ -270,7 +271,8 @@ erDiagram
     "material_link_category" ||--o{ "TGL: original material(tycl)" : is
     "material_category" {
         int(11) categoryId PK "分类Id"
-        varchar(24) categoryName "分类名"
+        varchar(24) categoryName UK "分类名"
+        tinyint(1) intoStatisticsFlag "是否纳入统计"
     }
     "material_link_category" {
         int(11) materialId PK,FK "原料Id"

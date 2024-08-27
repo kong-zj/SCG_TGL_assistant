@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from .models import Category
-from django.contrib.auth.models import User
+from .models import Category, MaterialLinkCategory
+
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -10,3 +10,10 @@ class CategorySerializer(serializers.ModelSerializer):
         # fields = ['categoryId', 'categoryName']
         # 表示全部字段
         fields = '__all__'
+        
+
+class MaterialLinkCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MaterialLinkCategory
+        fields = '__all__'
+
