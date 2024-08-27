@@ -49,6 +49,7 @@ class OriginalMaterialViewSet(viewsets.GenericViewSet):
     
     # 查全部
     def list(self, request):
+        # 使用 cursor，完全跨过模型类操作数据库
         cursor = connections['tgl'].cursor()
         cursor.execute(originalSql.original_material_all_sql())
         # 在这里用 cursor.rowcount 判断结果行数是无效的
@@ -64,7 +65,8 @@ class OriginalMaterialViewSet(viewsets.GenericViewSet):
     # 查一个
     def retrieve(self, request, pk):
         cursor = connections['tgl'].cursor()
-        cursor.execute(originalSql.original_material_get_sql(pk))
+        # 在sql语句中使用%s占位符形式，通过python本身的占位符语法先动态生成完整sql
+        cursor.execute(originalSql.original_material_get_sql(), (pk, ))
         # 结果是字典（可能为空）
         res_dict = public_func.dictfetchone(cursor)
         # init

@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework', # RESTful API
     'rest_framework.authtoken', # DRF 自带的Token认证
+    'drf_yasg', # swagger
     'material_category.apps.MaterialCategoryConfig',
     'order.apps.OrderConfig',
     'product.apps.ProductConfig',
@@ -177,3 +178,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
