@@ -48,56 +48,56 @@ We mainly obtain data for the TGL software from the following table:
 
 ### product list table (called: tjlb)
   
-| columnName | description                         | used |
-| ---------- | ----------------------------------- | ---- |
-| FNo        | productId                           | Y    |
-| Fguid      |                                     |      |
-| FZt        | status                              | Y    |
-| FScrq      | productDate                         | Y    |
-| FScbt      | machineId                           | Y    |
-| FDcsj      | 到场时间                            |      |
-| FCcsj      | start productTime                   | Y    |
-| FRwdh      | orderId                             | Y    |
-| FHtbh      | contractId                          |      |
-| FKhbh      |                                     |      |
-| FHtdw      | company name                        | Y    |
-| FGcmc      | project name                        | Y    |
-| FGcdz      | location                            |      |
-| FJzbw      | littleProject name                  | Y    |
-| FJzfs      | pump                                | Y    |
-| FGls       |                                     |      |
-| FTPz       | goods                               | Y    |
-| FTld       | cave                                | Y    |
-| FSgpb      | original recipeId                   |      |
-| FSjpb      |                                     |      |
-| FShch      | license plate number                | Y    |
-| FSjxm      | driver name                         |      |
-| FBcps      | mixing times amount                 |      |
-| FBcfs      | 本车方量                            |      |
-| FZzl       | weight                              |      |
-| FBsfs      |                                     |      |
-| FLjfs      | in-car quantity cumulative total    |      |
-| FLjcs      | car cumulative total                |      |
-| FCcqf      |                                     |      |
-| FYhqs      |                                     |      |
-| FCzy       | operator name                       |      |
-| FBz        |                                     |      |
-| FRz        |                                     |      |
-| FPhbNo     | original recipe name                |      |
-| FBcfsC     | ? 不一定 FBcfsC + FBcfsM = FBcfs    |      |
-| FBcfsM     | ?                                   |      |
-| FPcbID     |                                     |      |
-| FPhbSJ     |                                     |      |
-| FRvA       | 余方量 (别的工地转过来的，车里剩的) | Y    |
-| FRvB       | 拌方量 (real product quantity)      | Y    |
-| FRvC       | 票方量                              |      |
-| FQvA       | 退方量 (全都是0，未使用)            |      |
-| FCcsjEx    | end productTime                     |      |
-| Fdywc      | 小票是否打印完成                    |      |
-| Fqrscwc    | 确认生产完成                        |      |
-| Fdysj      | 第一次小票打印的时间                |      |
-| FVersion   | update this row DateTime(UTC)       |      |
-| updateTime | update this row DateTime(UTC+8)     |      |
+| columnName | description                                           | used |
+| ---------- | ----------------------------------------------------- | ---- |
+| FNo        | productId                                             | Y    |
+| Fguid      |                                                       |      |
+| FZt        | status                                                | Y    |
+| FScrq      | productDate                                           | Y    |
+| FScbt      | machineId                                             | Y    |
+| FDcsj      | 到场时间                                              |      |
+| FCcsj      | start productTime                                     | Y    |
+| FRwdh      | orderId                                               | Y    |
+| FHtbh      | contractId                                            |      |
+| FKhbh      |                                                       |      |
+| FHtdw      | company name                                          | Y    |
+| FGcmc      | project name                                          | Y    |
+| FGcdz      | location                                              |      |
+| FJzbw      | littleProject name                                    | Y    |
+| FJzfs      | pump                                                  | Y    |
+| FGls       |                                                       |      |
+| FTPz       | goods                                                 | Y    |
+| FTld       | cave                                                  | Y    |
+| FSgpb      | original recipeId                                     |      |
+| FSjpb      |                                                       |      |
+| FShch      | license plate number                                  | Y    |
+| FSjxm      | driver name                                           |      |
+| FBcps      | mixing times amount                                   |      |
+| FBcfs      | 本车方量 (in car quantity)                            |      |
+| FZzl       | weight                                                |      |
+| FBsfs      | 泵送方量                                              |      |
+| FLjfs      | in car quantity cumulative total                      |      |
+| FLjcs      | car cumulative total                                  |      |
+| FCcqf      | 出场签发 (issuer name)                                |      |
+| FYhqs      |                                                       |      |
+| FCzy       | operator name                                         |      |
+| FBz        |                                                       |      |
+| FRz        |                                                       |      |
+| FPhbNo     | original recipe name                                  |      |
+| FBcfsC     | ? 不一定 FBcfsC + FBcfsM = FBcfs                      |      |
+| FBcfsM     | ?                                                     |      |
+| FPcbID     |                                                       |      |
+| FPhbSJ     |                                                       |      |
+| FRvA       | 余方量 (别的工地转过来的，车里剩的)(surplus quantity) | Y    |
+| FRvB       | 拌方量 (real product quantity)                        | Y    |
+| FRvC       | 票方量                                                |      |
+| FQvA       | 退方量 (全都是0，未使用)                              |      |
+| FCcsjEx    | end productTime                                       |      |
+| Fdywc      | 小票是否打印完成 (has printed)                        |      |
+| Fqrscwc    | 确认生产完成 (has produced)                           |      |
+| Fdysj      | 第一次小票打印的时间 (printDateTime)                  |      |
+| FVersion   | update this row DateTime(UTC)                         |      |
+| updateTime | update this row DateTime(UTC+8)                       |      |
 
 ### original material table (called: tycl)
   

@@ -71,7 +71,7 @@ class OriginalMaterialViewSet(viewsets.GenericViewSet):
         res_dict = public_func.dictfetchone(cursor)
         # init
         json_res = {
-            "detail": "No OriginalMaterial matches the given query."
+            'detail': 'No OriginalMaterial matches the given query.'
         }
         status_res = status.HTTP_404_NOT_FOUND
         if res_dict is not None:

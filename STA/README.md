@@ -46,7 +46,8 @@ http://127.0.0.1:8000/api/material_category/material_link_category/<int:pk>
 ```
 GET:
 http://127.0.0.1:8000/api/order/order/
-可选参数: coprojlpName (用于搜索 companyName,projectName,littleProjectName 的内容), scheduleDate (用于搜索 scheduleDateTime 的日期部分)
+可选参数: coprojlpName (用于搜索 companyName,projectName,littleProjectName 的内容), 
+    scheduleDate (格式: XXXX-XX-XX, 用于搜索数据库中 scheduleDateTime 的日期部分)
 
 GET:
 http://127.0.0.1:8000/api/order/order/<int:pk>
@@ -56,10 +57,13 @@ http://127.0.0.1:8000/api/order/order/<int:pk>
 
 ```
 GET:
-http://127.0.0.1:8000/api/order/order/
+http://127.0.0.1:8000/api/product/product/
+可选参数: coprojlpName (用于搜索 companyName,projectName,littleProjectName 的内容), 
+    productDate (格式: XXXX-XX-XX, 用于搜索数据库中 productDate 的日期部分),
+    orderId (格式: 整数值, 用于搜索数据库中 orderId 的内容)
 
 GET:
-http://127.0.0.1:8000/api/order/order/<int:pk>
+http://127.0.0.1:8000/api/product/product/<int:pk>
 ```
 
 

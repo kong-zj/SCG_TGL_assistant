@@ -31,6 +31,7 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')), # DRF 的登录和退出
     path("api/material_category/", include("material_category.urls")),
     path("api/order/", include("order.urls")),
+    path("api/product/", include("product.urls")),
 ]
 
 

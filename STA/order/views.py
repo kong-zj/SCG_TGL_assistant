@@ -30,7 +30,6 @@ class OrderViewSet(viewsets.GenericViewSet):
             # f"%{coprojlpName_input}%" 相当于 LIKE 运算中的 任意位置匹配
             coprojlpName_format = f"%{coprojlpName_input}%"
         params = [scheduleDate_format, coprojlpName_format, coprojlpName_format, coprojlpName_format]
-        print(params)
         cursor.execute(originalSql.order_all_sql(), params)
         # 在这里用 cursor.rowcount 判断结果行数是无效的
         # 结果是字典列表（可能为空）
@@ -50,7 +49,7 @@ class OrderViewSet(viewsets.GenericViewSet):
         res_dict = public_func.dictfetchone(cursor)
         # init
         json_res = {
-            "detail": "No Order matches the given query."
+            'detail': 'No Order matches the given query.'
         }
         status_res = status.HTTP_404_NOT_FOUND
         if res_dict is not None:

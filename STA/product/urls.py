@@ -1,5 +1,5 @@
 from django.urls import path, include
-import order.views as views
+import product.views as views
 from rest_framework.routers import DefaultRouter
 
 
@@ -7,10 +7,10 @@ from rest_framework.routers import DefaultRouter
 urlpatterns = [
 
     # 这里需要末尾的 /
-    path("order/", views.OrderViewSet.as_view(
+    path("product/", views.ProductViewSet.as_view(
         {'get': 'list'}
         )),
-    path("order/<int:pk>", views.OrderViewSet.as_view(
+    path("product/<int:pk>", views.ProductViewSet.as_view(
         {'get': 'retrieve'}
         )),
 ]
