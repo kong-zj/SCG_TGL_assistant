@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'material_category.apps.MaterialCategoryConfig',
     'order.apps.OrderConfig',
     'product.apps.ProductConfig',
-    
+    'recipe.apps.RecipeConfig'
 ]
 
 

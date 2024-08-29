@@ -53,8 +53,8 @@ class OrderViewSet(viewsets.GenericViewSet):
         }
         status_res = status.HTTP_404_NOT_FOUND
         if res_dict is not None:
-             json_res = res_dict
-             status_res = status.HTTP_200_OK
+            json_res = res_dict
+            status_res = status.HTTP_200_OK
         return JsonResponse(data=json_res,status=status_res)
     
     

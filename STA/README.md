@@ -11,7 +11,9 @@ http://127.0.0.1:8000/swagger/
 username: admin
 password: 123456
 
-## Category 原料分类
+## MaterialCategory
+
+### Category 原料分类
 
 ```
 GET,POST: 
@@ -21,7 +23,7 @@ GET,PUT,PATCH,DELETE:
 http://127.0.0.1:8000/api/material_category/category/<int:pk>
 ```
 
-## OriginalMaterial 原料
+### OriginalMaterial 原料
 
 ```
 GET:
@@ -31,7 +33,7 @@ GET:
 http://127.0.0.1:8000/api/material_category/material/<int:pk>
 ```
 
-## MaterialLinkCategory 原料与分类绑定
+### MaterialLinkCategory 原料与分类绑定
 
 ```
 GET,POST: 
@@ -64,6 +66,33 @@ http://127.0.0.1:8000/api/product/product/
 
 GET:
 http://127.0.0.1:8000/api/product/product/<int:pk>
+```
+
+## Recipe 配比
+
+### SystemRecipe 系统配比
+
+```
+GET:
+http://127.0.0.1:8000/api/recipe/systemrecipe/
+可选参数: status (1:正在使用, 2:停止使用, 3:尚未使用)
+
+GET:
+http://127.0.0.1:8000/api/recipe/systemrecipe/<int:pk>
+```
+
+### OrderRecipe 任务单配比
+
+```
+GET:
+http://127.0.0.1:8000/api/recipe/orderrecipe/<int:pk>
+```
+
+### ProductRecipe 生产记录配比
+
+```
+GET:
+http://127.0.0.1:8000/api/recipe/productrecipe/<int:pk>
 ```
 
 

@@ -111,27 +111,27 @@ We mainly obtain data for the TGL software from the following table:
 
 ### brief system original recipe table (called: tphb)
   
-| columnName | description                   | used |
-| ---------- | ----------------------------- | ---- |
-| FPhbh      | recipeId                      | Y    |
-| FZt        | status                        |      |
-| FTpz       | goods                         | Y    |
-| FYt        | 用途                          |      |
-| FTld       | cave                          | Y    |
-| FSnpz      | 水泥品种                      |      |
-| FSzgg      | 石子规格                      |      |
-| FTbj       | 砼标记                        |      |
-| FTlq       | 龄期                          |      |
-| FBz        |                               |      |
-| FSy        |                               |      |
-| FSh        |                               |      |
-| FJsfz      |                               |      |
-| FCzy       | operator name                 |      |
-| FDlrq      |                               |      |
-| FJbsj      | schedule mixingTime           |      |
-| FClsjNo    |                               |      |
-| FPhbNo     | recipe name                   | Y    |
-| FVersion   | update this row DateTime(UTC) |      |
+| columnName | description                         | used |
+| ---------- | ----------------------------------- | ---- |
+| FPhbh      | recipeId                            | Y    |
+| FZt        | status (尚未使用,正在使用,停止使用) | Y    |
+| FTpz       | goods                               | Y    |
+| FYt        | 用途                                | Y    |
+| FTld       | cave                                | Y    |
+| FSnpz      | 水泥品种                            | Y    |
+| FSzgg      | 石子规格                            | Y    |
+| FTbj       | 砼标记                              | Y    |
+| FTlq       | 龄期                                |      |
+| FBz        | 砼备注                              | Y    |
+| FSy        |                                     |      |
+| FSh        |                                     |      |
+| FJsfz      |                                     |      |
+| FCzy       | operator name                       | Y    |
+| FDlrq      |                                     |      |
+| FJbsj      | schedule mixingTime                 | Y    |
+| FClsjNo    |                                     |      |
+| FPhbNo     | recipe name                         | Y    |
+| FVersion   | update this row DateTime(UTC)       |      |
 
 ### detailed system original recipe table (called: tphbycl)
 
@@ -227,13 +227,15 @@ We mainly obtain data for the TGL software from the following table:
 ```mermaid
 erDiagram
 
+    "order(trwd)" || -- o{ "order update log table(trwdleiji_log)" : "1:n(FRwdh)"
+
     "product(tjlb)" || -- o{ "real mixingTime each product(tjlbjbsj)" : "1:n(productId)"
     
     "order(trwd)" || -- o{ "order adjustable recipe(trwdphb)" : "1:n(FRwdh)"
 
     "product(tjlb)" || -- o{ "material consume each product(tjlbycl)" : "1:n(productId)"
     
-    "product(tjlb)" || -- || "order original recipe(trwdphbycl)" : "1:1(FRwdh,DateTime)"
+    "product(tjlb)" || -- o{ "order original recipe(trwdphbycl)" : "1:n(FRwdh,DateTime)"
     
     "product(tjlb)" || -- || "order adjustable recipe(trwdphb)" : "1:1(FRwdh,DateTime)"
     
@@ -241,16 +243,14 @@ erDiagram
     
     "order(trwd)" || -- o{ "order original recipe(trwdphbycl)" : "1:n(FRwdh)"
     
-    "brief recipe(tphb)" || -- o{ "detailed recipe(tphbycl)" : "1:n"
+    "brief system recipe(tphb)" || -- o{ "detailed system recipe(tphbycl)" : "1:n(recipeId)"
     
-    "detailed recipe(tphbycl)" || -- || "original material(tycl)" : "1:1"
+    "detailed system recipe(tphbycl)" || -- || "original material(tycl)" : "1:1(bigMaterialName,smallMaterialName)"
     
-    "product(tjlb)" || -- || "brief recipe(tphb)" : "1:1(recipeId)"
+    "product(tjlb)" || -- || "brief system recipe(tphb)" : "1:1(recipeId)"
     
-    "order(trwd)" || -- || "brief recipe(tphb)" : "1:1(recipeId)"
+    "order(trwd)" || -- || "brief system recipe(tphb)" : "1:1(recipeId)"
 
-    "order(trwd)" || -- o{ "order update log table(trwdleiji_log)" : "1:n(FRwdh)"
-    
     "order(trwd)" {
         int(11) FRwdh PK "orderId"
         varchar(128) FHtdw "company name"
@@ -314,14 +314,22 @@ erDiagram
         varchar(24) FPzgg PK "smallMaterialName"
     }
 
-    "brief recipe(tphb)" {
+    "brief system recipe(tphb)" {
         int(11) FPhbh PK "recipeId"
         varchar(20) FPhbNo "recipe name"
+        varchar(16) FZt "status"
         varchar(32) FTpz "goods"
         varchar(8) FTld "cave"
+        varchar(32) FTbj "砼标记 (mark)"
+        varchar(20) FYt "砼用途 (normalUsage)"
+        varchar(64) FBz "砼备注 (remark)"
+        varchar(8) FSnpz "水泥品种 (cement)"
+        varchar(8) FSzgg "石子规格 (stone)"
+        varchar(8) FCzy "operator name"
+        int(11) FJbsj "schedule mixingTime"
     }
 
-    "detailed recipe(tphbycl)" {
+    "detailed system recipe(tphbycl)" {
         int(11) FPhbh PK "recipeId"
         varchar(24) FYlmc PK "bigMaterialName"
         varchar(24) FPzgg PK "smallMaterialName"
