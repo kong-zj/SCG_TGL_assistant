@@ -38,11 +38,15 @@ class originalSql():
    
     @staticmethod
     def order_adjustable_recipe_all_sql():
+        # 这里有些查询出的数据未被使用
         # 只纳入施工配比，忽略砂浆配比
-        return '''SELECT detailedT.FYlmc AS bigMaterialName, detailedT.FPzgg AS smallMaterialName, detailedT.FSysl AS usageKilogram
-            FROM tphbycl AS detailedT
-            WHERE detailedT.FRwdh = %s
-            AND detailedT.FPblb = 0;'''
+        # 按调整时间，由小到大排序
+        return '''SELECT adjustableT.FTzsj AS adjustDateTime, adjustableT.FPblx AS machineId, adjustableT.FPbh2 AS nowRecipeId,
+            adjustableT.FCzy AS operatorName, adjustableT.FBz AS recipeContent
+            FROM trwdphb AS adjustableT
+            WHERE adjustableT.FRwdh = %s
+            AND adjustableT.FPblx != "砂浆"
+            ORDER BY adjustableT.FTzsj ASC;'''
     
     
     @staticmethod

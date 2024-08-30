@@ -73,8 +73,7 @@ class SystemRecipeViewSet(viewsets.GenericViewSet):
 # ReadOnly
 class OrderRecipeViewSet(viewsets.GenericViewSet):
     
-    # 查全部
-    def list(self, request, pk):
+    def list_original_inner(self, pk):
         cursor = connections['tgl'].cursor()
         # 原始配比
         cursor.execute(originalSql.order_original_recipe_all_sql(), (pk, ))
@@ -88,10 +87,47 @@ class OrderRecipeViewSet(viewsets.GenericViewSet):
                 machineId_key_dict[dict['machineId']] = []
             value = {'bigMaterialName':dict['bigMaterialName'], 'smallMaterialName':dict['smallMaterialName'], 'usageKilogram':dict['usageKilogram']}
             machineId_key_dict[dict['machineId']].append(value)
-        print(machineId_key_dict)
+        # 格式: dict{defaultDateTime: dict{machineId: list[各个成分的字典] } }
+        defaultDateTime_key_dict = {}
+        # 如果machineId_key_dict字典非空，那么指定defaultDateTime为0
+        if machineId_key_dict:
+            defaultDateTime_key_dict = {'0': machineId_key_dict}
+        return defaultDateTime_key_dict
+    
+    def list_adjustable_inner(self, pk):
+        cursor = connections['tgl'].cursor()
+        # 原始配比
+        cursor.execute(originalSql.order_adjustable_recipe_all_sql(), (pk, ))
+        # 结果是字典列表（可能为空）
+        res_dict_list = public_func.dictfetchall(cursor)
+        # 构建树形结构 adjustDateTime:各个machineId的调整
+        adjustDateTime_key_dict = {}
+        for dict in res_dict_list:
+            # 首次将数据插入 key为 dict['adjustDateTime'] 的value(字典)中，此时key和value(列表)都不存在，要初始化
+            if dict['adjustDateTime'] not in adjustDateTime_key_dict:
+                adjustDateTime_key_dict[dict['adjustDateTime']] = {}
+                # 解析 dict['recipeContent']
+                # 每种成分解析为一个字典，返回字典列表
+                recipeContent_dict_list = public_func.recipeContent_to_dict_list(dict['recipeContent'])
+                format_machineId = dict['machineId']
+                # 施工 -> 0
+                if '施工' == format_machineId:
+                    format_machineId = 0
+            # value = {'machineId':format_machineId, 'recipeContent':recipeContent_dict_list}
+            value = {format_machineId:recipeContent_dict_list}
+            # 格式: dict{adjustDateTime: dict{machineId: list[各个成分的字典] } }
+            adjustDateTime_key_dict[dict['adjustDateTime']] = value
+        return adjustDateTime_key_dict
+    
+    # 查全部
+    def list(self, request, pk):
+        defaultDateTime_key_dict = self.list_original_inner(pk)
+        adjustDateTime_key_dict = self.list_adjustable_inner(pk)
+        # 字典二合一
+        dateTime_key_dict = {**defaultDateTime_key_dict, **adjustDateTime_key_dict}
         json_res = {
-            'count': len(machineId_key_dict),
-            'results': machineId_key_dict
+            'count': len(dateTime_key_dict),
+            'results': dateTime_key_dict
         }
         return JsonResponse(json_res)
     

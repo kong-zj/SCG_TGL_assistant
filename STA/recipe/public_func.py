@@ -1,4 +1,5 @@
-    
+import re
+  
 # 将查询出的多行数据序列化为字典列表 dict_list
 def dictfetchall(cursor):
     """
@@ -23,4 +24,20 @@ def dictfetchone(cursor):
     if row is not None:
         res = dict(zip(columns, row))        
     return res
+
+# 解析 order_adjustable_recipe表中的 recipeContent列
+# 字符串，内容格式为 "{bigMaterialName(smallMaterialName)=usageKilogram}{...}"
+def recipeContent_to_dict_list(recipeContent):
+    # init
+    recipeContent_dict_list = []
+    each_recipe_str_list = re.split(pattern=r'[{}]', string=recipeContent)
+    # filter()函数的返回值是迭代器，要转换为list
+    each_recipe_str_list = list(filter(lambda eachRecipeString: eachRecipeString != '', each_recipe_str_list))
+    for each_recipe_str in each_recipe_str_list:
+        # 字符串，内容格式为"{bigMaterialName(smallMaterialName)=usageKilogram}
+        bigAndsmallMaterialName, usageKilogram = re.split(pattern=r'[=]', string=each_recipe_str, maxsplit=1)
+        bigMaterialName, smallMaterialName, discard_str = re.split(pattern=r'[()]', string=bigAndsmallMaterialName, maxsplit=2)
+        value = {'bigMaterialName':bigMaterialName, 'smallMaterialName':smallMaterialName, 'usageKilogram':usageKilogram}
+        recipeContent_dict_list.append(value)
+    return recipeContent_dict_list
 

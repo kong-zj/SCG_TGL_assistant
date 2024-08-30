@@ -86,6 +86,9 @@ http://127.0.0.1:8000/api/recipe/systemrecipe/<int:pk>
 ```
 GET:
 http://127.0.0.1:8000/api/recipe/orderrecipe/<int:pk>
+返回值格式: dict{dateTime: dict{machineId: list[各个成分的字典] } }
+    dateTime (0:和order同步生成)
+    machineId (0:全部拌台)
 ```
 
 ### ProductRecipe 生产记录配比
