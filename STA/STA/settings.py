@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'material_category.apps.MaterialCategoryConfig',
     'order.apps.OrderConfig',
     'product.apps.ProductConfig',
-    'recipe.apps.RecipeConfig'
+    'recipe.apps.RecipeConfig',
+    'sta_auth.apps.StaAuthConfig',
 ]
 
 
@@ -83,7 +84,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',

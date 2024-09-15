@@ -29,10 +29,11 @@ urlpatterns = [
     re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'), # drf_yasg2 配置
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')), # DRF 的登录和退出
-    path("api/material_category/", include("material_category.urls")),
-    path("api/order/", include("order.urls")),
-    path("api/product/", include("product.urls")),
-    path("api/recipe/", include("recipe.urls")),
+    path("material_category/", include("material_category.urls")),
+    path("order/", include("order.urls")),
+    path("product/", include("product.urls")),
+    path("recipe/", include("recipe.urls")),
+    path("sta_auth/", include("sta_auth.urls")),
 ]
 
 

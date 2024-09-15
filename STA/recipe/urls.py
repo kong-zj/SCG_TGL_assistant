@@ -16,7 +16,7 @@ urlpatterns = [
     path("orderrecipe/<int:pk>", views.OrderRecipeViewSet.as_view(
         {'get': 'list'}
         )),
-    path("productrecipe/<int:pk>", views.ProductRecipeViewSet.as_view(
-        {'get': 'retrieve'}
+    path("productrecipe/<int:product_pk>", views.ProductRecipeViewSet.as_view(
+        {'get': 'detailed_retrieve'}
         )),
 ]

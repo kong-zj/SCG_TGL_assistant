@@ -135,20 +135,53 @@ class OrderRecipeViewSet(viewsets.GenericViewSet):
     
 # ReadOnly
 class ProductRecipeViewSet(viewsets.GenericViewSet):
-    
-    # 查一个
-    def retrieve(self, request, pk):
+      
+    def detailed_retrieve_adjustable_inner(self, product_pk):
         cursor = connections['tgl'].cursor()
-        # 在sql语句中使用%s占位符形式，通过python本身的占位符语法先动态生成完整sql
-        cursor.execute(originalSql.original_material_get_sql(), (pk, ))
+        cursor.execute(originalSql.product_adjustable_recipe_get_sql(), (product_pk, ))
         # 结果是字典（可能为空）
         res_dict = public_func.dictfetchone(cursor)
+        recipeContent_dict_list = None
+        if res_dict:
+            recipeContent_dict_list = public_func.recipeContent_to_dict_list(res_dict['recipeContent'])
+        return recipeContent_dict_list
+    
+    def detailed_retrieve_original_inner(self, product_pk):
+        cursor = connections['tgl'].cursor()
+        params = [product_pk,product_pk]
+        cursor.execute(originalSql.product_original_recipe_get_sql(), params)
+        # 结果是字典列表（可能为空）
+        res_dict_list = public_func.dictfetchall(cursor)
+        recipeContent_dict_list = None
+        if len(res_dict_list) !=0:
+            recipeContent_dict_list = res_dict_list
+        return recipeContent_dict_list
+        
+    
+    # 查一个
+    # include original and adjustable recipe
+    def detailed_retrieve(self, request, product_pk):
+        adjustable_recipe_dict = self.detailed_retrieve_adjustable_inner(product_pk)
+        original_recipe_dict = None
+        # 找到符合的调整配比
+        if adjustable_recipe_dict:
+            pass
+        # 没找到调整配比，去找原始配比
+        else:
+            original_recipe_dict = self.detailed_retrieve_original_inner(product_pk)
         # init
-        json_res = {
-            'detail': 'No OriginalMaterial matches the given query.'
-        }
+        json_res = {}
         status_res = status.HTTP_404_NOT_FOUND
-        if res_dict is not None:
-            json_res = res_dict
+        # 三种情况：1.找到调整配比 2.找到原始配比 3.两者都没有
+        if adjustable_recipe_dict is not None:
+            json_res['detailed_recipe'] = adjustable_recipe_dict
             status_res = status.HTTP_200_OK
+        elif original_recipe_dict is not None:
+            json_res['detailed_recipe'] = original_recipe_dict
+            status_res = status.HTTP_200_OK
+        else:
+            json_res = {
+            'detail': 'No Recipe matches this Product.'
+        }
         return JsonResponse(data=json_res,status=status_res)
+

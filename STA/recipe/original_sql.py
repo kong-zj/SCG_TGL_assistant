@@ -50,10 +50,45 @@ class originalSql():
     
     
     @staticmethod
-    def product_recipe_get_sql():
-        # include original amd adjustable recipe
-        # not use productId, use orderId and startProductDateTime
-        pass
+    def product_adjustable_recipe_get_sql():
+        # only include adjustable recipe
+        # use productId to get orderId, startProductDateTime and machineId
+        return '''SELECT adjustableT.FBz AS recipeContent
+            FROM trwdphb AS adjustableT JOIN tjlb AS productT
+            ON productT.FNo = %s
+            AND adjustableT.FRwdh = productT.FRwdh
+            AND (
+	            adjustableT.FPblx = "施工"
+	            OR adjustableT.FPblx = productT.FScbt
+	            )
+            AND adjustableT.FTzsj <= CONCAT(productT.FScrq,' ',productT.FCcsj)
+            ORDER BY adjustableT.FId DESC
+            LIMIT 1;'''
+            
+             
+    @staticmethod
+    def product_original_recipe_get_sql():
+        # only include original recipe
+        # use productId to get orderId, startProductDateTime and machineId
+        return '''SELECT originalT.FYlmc AS bigMaterialName, originalT.FPzgg AS smallMaterialName, originalT.FSysl AS usageKilogram
+            FROM trwdphbycl AS originalT JOIN tjlb AS productT
+            ON productT.FNo = %s
+            AND originalT.FRwdh = productT.FRwdh
+            AND originalT.FBtId = (
+	            SELECT originalT.FBtId
+	            FROM trwdphbycl AS originalT JOIN tjlb AS productT
+	            ON productT.FNo = %s
+	            AND originalT.FRwdh = productT.FRwdh
+	            AND (
+		            originalT.FBtId = 0
+		            OR originalT.FBtId = productT.FScbt
+		            )
+	            AND originalT.FPblb = 0
+	            GROUP BY originalT.FBtId
+	            ORDER BY originalT.FBtId DESC
+	            LIMIT 1
+	            )
+            AND originalT.FPblb = 0;'''
     
     
 
