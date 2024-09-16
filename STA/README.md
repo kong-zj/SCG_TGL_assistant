@@ -115,10 +115,24 @@ http://127.0.0.1:8000/consume/productbriefconsume/<int:product_pk>
 
 ## sta_auth 认证相关
 
-### UserLogin 用户登录
+### SignIn 用户登录
 
 ```
 POST:
-http://127.0.0.1:8000/recipe/productrecipe/<int:pk>
+http://127.0.0.1:8000/sta_auth/signin/
+```
+
+### SignUp 用户注册
+
+```
+POST:
+http://127.0.0.1:8000/sta_auth/signup/
+```
+
+### SignUp 用户退出登录
+
+```
+POST:
+http://127.0.0.1:8000/sta_auth/signout/
 ```
 
