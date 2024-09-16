@@ -91,11 +91,26 @@ http://127.0.0.1:8000/recipe/orderrecipe/<int:pk>
     machineId (0:全部拌台)
 ```
 
-### ProductRecipe 生产记录对应配比
+### ProductRecipe 生产记录对应配比（用于计算，不用于对应）
 
 ```
 GET:
 http://127.0.0.1:8000/recipe/productrecipe/<int:product_pk>
+返回值格式: list[各个成分的字典]
+```
+
+## Consume 消耗
+
+### ProductConsume 生产记录消耗
+
+```
+GET:
+http://127.0.0.1:8000/consume/productdetailedconsume/<int:product_pk>
+返回值格式: dict{mixTimes: list[各个成分的字典] }
+
+GET:
+http://127.0.0.1:8000/consume/productbriefconsume/<int:product_pk>
+返回值格式: list[各个成分的字典]
 ```
 
 ## sta_auth 认证相关

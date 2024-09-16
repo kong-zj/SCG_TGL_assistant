@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'product.apps.ProductConfig',
     'recipe.apps.RecipeConfig',
     'sta_auth.apps.StaAuthConfig',
+    'consume.apps.ConsumeConfig',
 ]
 
 

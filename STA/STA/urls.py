@@ -34,6 +34,7 @@ urlpatterns = [
     path("product/", include("product.urls")),
     path("recipe/", include("recipe.urls")),
     path("sta_auth/", include("sta_auth.urls")),
+    path("consume/", include("consume.urls")),
 ]
 
 

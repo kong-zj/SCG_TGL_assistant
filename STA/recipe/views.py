@@ -65,7 +65,7 @@ class SystemRecipeViewSet(viewsets.GenericViewSet):
             cursor.execute(originalSql.system_detailed_recipe_get_sql(), (pk, ))
             # 结果是字典列表（可能为空）
             res_dict_list = public_func.dictfetchall(cursor)
-            json_res['detailed_recipe'] = res_dict_list
+            json_res['results'] = res_dict_list
         return JsonResponse(data=json_res,status=status_res)
 
 
@@ -174,10 +174,10 @@ class ProductRecipeViewSet(viewsets.GenericViewSet):
         status_res = status.HTTP_404_NOT_FOUND
         # 三种情况：1.找到调整配比 2.找到原始配比 3.两者都没有
         if adjustable_recipe_dict is not None:
-            json_res['detailed_recipe'] = adjustable_recipe_dict
+            json_res['results'] = adjustable_recipe_dict
             status_res = status.HTTP_200_OK
         elif original_recipe_dict is not None:
-            json_res['detailed_recipe'] = original_recipe_dict
+            json_res['results'] = original_recipe_dict
             status_res = status.HTTP_200_OK
         else:
             json_res = {
