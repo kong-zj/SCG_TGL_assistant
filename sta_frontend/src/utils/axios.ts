@@ -1,18 +1,18 @@
 
 import { message } from "antd";
 import axios from "axios";
-import cookie from 'react-cookies'
+import cookie from 'react-cookies';
 
 // 使用代理的路径
-let baseUrl = '/api'
+let baseUrl = '/api';
 
 // 创建axios实例，在这里可以设置请求的默认配置
 const instance = axios.create({
     timeout: 2000, // 设置超时时间2s
     baseURL: baseUrl // 根据自己配置的反向代理去设置不同环境的baseUrl
-})
+});
 // 文档中的统一设置post请求头。下面会说到post请求的几种'Content-Type'
-instance.defaults.headers.post['Content-Type'] = 'application/json'
+instance.defaults.headers.post['Content-Type'] = 'application/json';
 
 /** 添加请求拦截器 **/
 instance.interceptors.request.use(config => {
@@ -27,7 +27,7 @@ instance.interceptors.request.use(config => {
 }, error => {
     // 对请求错误做些什么
     return Promise.reject(error)
-})
+});
 
 /** 添加响应拦截器  **/
 instance.interceptors.response.use(response => {
@@ -41,7 +41,7 @@ instance.interceptors.response.use(response => {
     if (error.response) {
 		// 如401就让用户返回登录页
         if (error.response.status === 401) {
-            this.props.history.push('/login');
+            // this.props.history.push('/login');
         }
         else {
             message.error(error.response.data.msg)
@@ -50,10 +50,10 @@ instance.interceptors.response.use(response => {
     } else {
         return Promise.reject('请求超时, 请刷新重试')
     }
-})
+});
 
 /* 统一封装get请求 */
-export const get = (url, params, config = {}) => {
+export const get = (url: string, params?: any, config = {}) => {
     return new Promise((resolve, reject) => {
         instance({
             method: 'get',
@@ -66,10 +66,10 @@ export const get = (url, params, config = {}) => {
             reject(error)
         })
     })
-}
+};
 
 /* 统一封装post请求  */
-export const post = (url, data, config = {}) => {
+export const post = (url: string, data?: any, config = {}) => {
     return new Promise((resolve, reject) => {
         instance({
             method: 'post',
@@ -82,5 +82,5 @@ export const post = (url, data, config = {}) => {
             reject(error)
         })
     })
-}
+};
 

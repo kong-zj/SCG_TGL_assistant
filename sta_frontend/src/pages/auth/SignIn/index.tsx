@@ -59,7 +59,7 @@ class SignIn extends Component {
                     //成功登录
                     //在 Index 用 cookie 判断是否登录
                     cookie.save('username', that.state.username, { path: '/' });
-                    cookie.save('loginSuccess', true, { path: '/' });
+                    cookie.save('loginSuccess', 'true', { path: '/' });
                     cookie.save('email', data.email, {path:'/'});
                     //页面跳转
                     window.location.href = '/index';

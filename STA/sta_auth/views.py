@@ -23,7 +23,8 @@ class SignIn(View):
         print(password)
         resUser:User = authenticate(request, username=username, password=password)
         if resUser and resUser.is_active:
-            login(request, resUser)
+            # 用户登录成功之后（返回给客户端登录的凭证或者说是令牌、随机字符串）
+            login(request, resUser)         # 自动操作django_session表
             json_res = {
                 'results': '登录成功'
             }
@@ -42,47 +43,58 @@ class SignUp(View):
         data = json.loads(request.body.decode('utf-8'))
         username = data.get('username')
         password = data.get('password')
-        email = data.get('email')
+        # email = data.get('email')
+        # 后续加入邮箱验证
         print(username)
         print(password)
-        print(email)
-        resUser:User = authenticate(request, username=username, password=password)
-        if resUser and resUser.is_active:
-            login(request, resUser)
+        # print(email)
+        # 校验username是否已被注册
+        userList = User.objects.filter(username=username)
+        userHasExist = False if len(userList)==0 else True
+        print(userHasExist)
+        if userHasExist:
             json_res = {
-                'results': '登录成功'
+                'results': '用户名已存在，不能重复注册'
             }
-            return JsonResponse(json_res)
-        else:
-            json_res = {
-                'results': '用户名或密码错误'
-            }
-            status_res = status.HTTP_401_UNAUTHORIZED
+            status_res = status.HTTP_406_NOT_ACCEPTABLE
             return JsonResponse(json_res, status=status_res)
+        else:
+            # 尝试注册
+            try:
+                User.objects.create_user(username=username, password=password)
+            except Exception as ErrMessage:
+                json_res = {
+                    'detail': '注册失败，系统错误',
+                    'errmessage': str(ErrMessage)
+                }
+                status_res = status.HTTP_406_NOT_ACCEPTABLE
+                return JsonResponse(data=json_res,status=status_res)
+            # 注册成功
+            json_res = {
+                'results': '注册成功'
+            }
+            return JsonResponse(data=json_res)
+            
+            
+
     
     
 class SignOut(View):
     @csrf_exempt
     def post(self, request):
-        data = json.loads(request.body.decode('utf-8'))
-        username = data.get('username')
-        password = data.get('password')
-        email = data.get('email')
-        print(username)
-        print(password)
-        print(email)
-        resUser:User = authenticate(request, username=username, password=password)
-        if resUser and resUser.is_active:
-            login(request, resUser)
+        try:
+            logout(request)
+        except Exception as ErrMessage:
             json_res = {
-                'results': '登录成功'
+                'detail': '退出登录失败，系统错误',
+                'errmessage': str(ErrMessage)
             }
-            return JsonResponse(json_res)
-        else:
-            json_res = {
-                'results': '用户名或密码错误'
-            }
-            status_res = status.HTTP_401_UNAUTHORIZED
-            return JsonResponse(json_res, status=status_res)
+            status_res = status.HTTP_406_NOT_ACCEPTABLE
+            return JsonResponse(data=json_res,status=status_res)
+        # 退出登录成功
+        json_res = {
+            'results': '退出登录成功'
+        }
+        return JsonResponse(data=json_res)
     
 

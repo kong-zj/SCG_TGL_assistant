@@ -8,6 +8,8 @@ import SignIn from "./pages/auth/SignIn";
 import SignUp from "./pages/auth/SignUp";
 import Index from "./pages/Index";
 import Home from "./pages/Home"
+import ProductList from './pages/product/ProductList';
+import ProductDetail from './pages/product/ProductDetail';
 
 import logo from './logo.svg';
 import './App.css';
@@ -26,6 +28,8 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
 
           <Route path="/home" element={<Home />} />
+          <Route path="/productlist" element={<ProductList />} />
+          <Route path="/product/:pk" element={<ProductDetail />} />
 
 
         </Routes>

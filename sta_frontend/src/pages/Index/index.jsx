@@ -13,7 +13,7 @@ class Index extends Component {
               <Link to="/home" className="link">跳转Home页面</Link>
               <Link to="/signin" className="link">登录</Link>
               <Link to="/signup" className="link">注册</Link>
-
+            
             </div>
         );
     }

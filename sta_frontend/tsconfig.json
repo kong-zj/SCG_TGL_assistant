@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "es2016", // 编译生成的目标版本代码                          
+    // "lib": ["esnext","dom","dom.iterable","scripthost"],   // 指定我们需要用到的库，也可以不配置，直接根据 target 来获取                                     /* Specify a set of bundled library declaration files that describe the target runtime environment. */
+    "jsx": "preserve", // jsx 的处理方式(保留原有的jsx格式)                       
+    "module": "commonjs", // 生成代码使用的模块化                   
+    "moduleResolution": "node10", // 按照 node 的模块解析规则  
+    "baseUrl": "./", // 文件路径在解析时的基本url               
+    // "paths": {"@/*":["src/*"]},    // 路径的映射设置，类似于webpack中的 alias                              
+    // "types": ["webpack-dev"],    // 指定需要加载哪些 types 文件(默认都会进行加载)                              
+    "allowJs": true, // 允许在项目中导入 JavaScript 文件            
+    "sourceMap": true, // 是否要生成 sourcemap 文件  
+    "importHelpers": true, // 是否帮助导入一些需要的功能模块          
+    "allowSyntheticDefaultImports": true, // 允许合成默认模块导出    
+    "esModuleInterop": true, // 支持es module 和 commonjs 混合使用
+    "strict": true, // 打开所有的严格模式检查
+    "noImplicitAny": false, // 为具有隐含“any”类型的表达式和声明启用错误报告                      
+    "skipLibCheck": true, // 跳过对整个库的类型检测，而仅检测你用到的类型
+    "include": [ // 指定编译时包含的文件
+      "src/**/*.ts",
+      "src/**/*.tsx",
+      "tests/**/*.ts",
+      "tests/**/*.tsx"
+    ],
+    "exclude": [
+      "node_modules"
+    ] // 指定编译时应跳过的文件
+  }
+}
